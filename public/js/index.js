@@ -42,7 +42,6 @@ $(document).ready(function() {
         .siblings(".date")
         .text()
     };
-    console.log(article);
     $.ajax({
       url: "/save",
       type: "POST",
