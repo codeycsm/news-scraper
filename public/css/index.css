@@ -28,3 +28,8 @@ h1 {
   background-color: #fff;
   /* font-size: 0.8em; */
 }
+
+#modal-comments {
+  height: 8em;
+  overflow-y: scroll;
+}

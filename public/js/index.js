@@ -4,10 +4,11 @@ $(document).ready(function() {
     $.ajax({
       url: "/scrape",
       type: "GET"
-    }).then(function(data) {
-      $("#news").empty();
-      for (let i = 0; i < data.length; i++) {
-        $("#news").append(`
+    })
+      .then(function(data) {
+        $("#news").empty();
+        for (let i = 0; i < data.length; i++) {
+          $("#news").append(`
         <div class="row mx-2 py-3 border-top border-bottom text-center">
           <div class="col date">${data[i].date}</div>
           <div class="col title">${data[i].title}</div>
@@ -19,8 +20,11 @@ $(document).ready(function() {
           </div>
         </div>
       `);
-      }
-    });
+        }
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
   });
 
   //Saves article to database
@@ -42,7 +46,11 @@ $(document).ready(function() {
       url: "/save",
       type: "POST",
       data: article
-    }).then(function(data) {});
+    })
+      .then(function(data) {})
+      .catch(function(err) {
+        console.log(err);
+      });
   });
 
   // Retreive saved articles.
@@ -50,10 +58,11 @@ $(document).ready(function() {
     $.ajax({
       url: "/saved",
       type: "GET"
-    }).then(function(data) {
-      $("#news").empty();
-      for (let i = 0; i < data.length; i++) {
-        $("#news").append(`
+    })
+      .then(function(data) {
+        $("#news").empty();
+        for (let i = 0; i < data.length; i++) {
+          $("#news").append(`
         <div id="${
           data[i]._id
         }" class="row mx-2 py-3 border-top border-bottom text-center">
@@ -68,8 +77,11 @@ $(document).ready(function() {
           </div>
         </div>
       `);
-      }
-    });
+        }
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
   });
 
   // Delete Specific Article.
@@ -82,10 +94,11 @@ $(document).ready(function() {
       url: "/delete",
       type: "DELETE",
       data: { id }
-    }).then(function(data) {
-      $("#news").empty();
-      for (let i = 0; i < data.length; i++) {
-        $("#news").append(`
+    })
+      .then(function(data) {
+        $("#news").empty();
+        for (let i = 0; i < data.length; i++) {
+          $("#news").append(`
         <div id="${
           data[i]._id
         }" class="row mx-2 py-3 border-top border-bottom text-center">
@@ -100,10 +113,13 @@ $(document).ready(function() {
           </div>
         </div>
       `);
-      }
-    });
+        }
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
   });
-  // comments route
+  // display's comments with article title in a modal
   $("#news").on("click", ".comment", function() {
     let id = $(this)
       .parent()
@@ -113,21 +129,25 @@ $(document).ready(function() {
       url: "/comments",
       type: "POST",
       data: { id }
-    }).then(function(data) {
-      $(".modal-title").html(data.title);
-      $("div.modal-body").attr("id", data._id);
-      $("#modal-comments").empty();
-      for (let i = 0; i < data.comment.length; i++) {
-        $("#modal-comments").append(
-          `<p class="border-bottom">
+    })
+      .then(function(data) {
+        $(".modal-title").html(data.title);
+        $("div.modal-body").attr("id", data._id);
+        $("#modal-comments").empty();
+        for (let i = 0; i < data.comment.length; i++) {
+          $("#modal-comments").append(
+            `<p class="border-bottom pt-3">
             ${data.comment[i]}
           </p>`
-        );
-      }
-    });
+          );
+        }
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
     $("#myModal").modal("show");
   });
-  // Add Comment
+  // Adds a comment into article collection comment array
   $("#add-comment").on("click", function() {
     let newComment = {
       id: $("div.modal-body").attr("id"),
@@ -140,7 +160,7 @@ $(document).ready(function() {
     })
       .then(function(data) {
         $("#modal-comments").append(
-          `<p class="border-bottom">
+          `<p class="border-bottom pt-3">
             ${newComment.comment}
           </p>`
         );

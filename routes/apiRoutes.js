@@ -50,32 +50,40 @@ router.post("/save", function(req, res) {
 });
 
 router.get("/saved", function(req, res) {
-  console.log("Saved Route");
-  db.find({}).then(function(response) {
-    res.send(response);
-  });
+  db.find({})
+    .then(function(response) {
+      res.send(response);
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
 });
 // Delete Article route
 router.delete("/delete", function(req, res) {
   let id = req.body.id;
-  console.log("Delete Route");
-  console.log(id);
   db.findOneAndDelete({ _id: id }).then(function() {
-    db.find({}).then(function(response) {
-      res.send(response);
-    });
+    db.find({})
+      .then(function(response) {
+        res.send(response);
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
   });
 });
 
 router.post("/comments", function(req, res) {
   let id = req.body.id;
-  db.findById(id).then(function(response) {
-    res.send(response);
-  });
+  db.findById(id)
+    .then(function(response) {
+      res.send(response);
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
 });
 
 router.post("/new-comment", function(req, res) {
-  console.log(req.body);
   db.findOneAndUpdate(
     { _id: req.body.id },
     { $push: { comment: req.body.comment } }
