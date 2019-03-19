@@ -1,0 +1,30 @@
+html,
+body {
+  height: 100%;
+}
+body {
+  background-image: url("../images/bgImg.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+nav,
+footer {
+  height: 4em;
+}
+
+#mainContent {
+  height: calc(100% - 128px);
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+h1 {
+  color: #fff;
+}
+
+#news {
+  background-color: #fff;
+  /* font-size: 0.8em; */
+}
