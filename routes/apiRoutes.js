@@ -7,7 +7,7 @@ let express = require("express"),
 // Scrape route scrapes news page and displays is to user.
 router.get("/scrape", function(req, res) {
   axios
-    .get("https://www.ksl.com/")
+    .get("https://www.ksl.com")
     .then(function(response) {
       let $ = cheerio.load(response.data);
       let news = [];
