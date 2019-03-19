@@ -15,7 +15,7 @@ $(document).ready(function() {
           <div class="col link">
             <a class="save btn btn-sm btn-primary my-1" href="https://www.ksl.com${
               data[i].link
-            }">Read More</a>
+            }" target="_blank">Read More</a>
             <button class="save btn btn-sm btn-success">Save</button>
           </div>
         </div>
@@ -42,6 +42,7 @@ $(document).ready(function() {
         .siblings(".date")
         .text()
     };
+    console.log(article);
     $.ajax({
       url: "/save",
       type: "POST",
@@ -71,7 +72,7 @@ $(document).ready(function() {
           <div class="col link">
             <a class="btn btn-sm btn-primary my-1" href="${
               data[i].link
-            }">Read More</a>
+            }" target="_blank">Read More</a>
             <button class="comment btn btn-sm btn-success">Comments</button>
             <button class="delete btn btn-sm btn-danger my-1">X</button>
           </div>
@@ -107,7 +108,7 @@ $(document).ready(function() {
           <div class="col link">
             <a class="btn btn-sm btn-primary my-1" href="${
               data[i].link
-            }">Read More</a>
+            }" target="_blank">Read More</a>
             <button class="comment btn btn-sm btn-success">Comments</button>
             <button class="delete btn btn-sm btn-danger my-1">X</button>
           </div>

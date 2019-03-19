@@ -4,6 +4,7 @@ let express = require("express"),
   cheerio = require("cheerio"),
   router = express.Router();
 
+// Scrape route scrapes news page and displays is to user.
 router.get("/scrape", function(req, res) {
   axios
     .get("https://www.ksl.com/")
@@ -36,19 +37,21 @@ router.get("/scrape", function(req, res) {
       console.log(err);
     });
 });
-
+// Save route saves article to database.
 router.post("/save", function(req, res) {
   db.create({
     title: req.body.title,
     date: req.body.date,
     link: req.body.link
   })
-    .then(function(response) {})
+    .then(function(response) {
+      res.send(response);
+    })
     .catch(function(err) {
       console.log(err);
     });
 });
-
+// Saved route retreives saved articles from the database.
 router.get("/saved", function(req, res) {
   db.find({})
     .then(function(response) {
@@ -58,7 +61,7 @@ router.get("/saved", function(req, res) {
       console.log(err);
     });
 });
-// Delete Article route
+// Delete Article from database
 router.delete("/delete", function(req, res) {
   let id = req.body.id;
   db.findOneAndDelete({ _id: id }).then(function() {
@@ -71,7 +74,7 @@ router.delete("/delete", function(req, res) {
       });
   });
 });
-
+// Shows user the articles comments .
 router.post("/comments", function(req, res) {
   let id = req.body.id;
   db.findById(id)
@@ -82,7 +85,7 @@ router.post("/comments", function(req, res) {
       console.log(err);
     });
 });
-
+// Adds a comment to an articles comment array in database.
 router.post("/new-comment", function(req, res) {
   db.findOneAndUpdate(
     { _id: req.body.id },
